@@ -1,0 +1,62 @@
+{
+  "glossary": {
+    "SaaS": "Software as a Service，按订阅交付的云软件服务模式。",
+    "Agent": "能规划并调用工具完成多步任务的智能体，而不仅是单轮对话。",
+    "MCP": "Model Context Protocol，把业务工具以标准协议暴露给 Agent / IDE 客户端。",
+    "Tool Calling": "大模型按 schema 选择并调用外部工具，再根据工具结果继续推理。",
+    "RAG": "Retrieval-Augmented Generation，检索企业知识后再生成回答。",
+    "SSE": "Server-Sent Events，服务端向浏览器推送任务步骤与最终结论。"
+  },
+  "competitors": [
+    {
+      "name": "飞书",
+      "focus": "协作套件 / 多维表格 / AI 助理",
+      "notes": "企业办公与知识协作场景常见对标"
+    },
+    {
+      "name": "钉钉",
+      "focus": "组织协同 / 低代码 / AI 助理",
+      "notes": "中大型组织数字化协同常见对标"
+    },
+    {
+      "name": "企业微信",
+      "focus": "客户联系 / 私域连接 / 微信生态",
+      "notes": "ToB+ToC 连接场景常见对标"
+    },
+    {
+      "name": "石墨文档",
+      "focus": "在线文档协作 / 知识沉淀",
+      "notes": "轻量文档与知识库场景对标"
+    },
+    {
+      "name": "Notion",
+      "focus": "All-in-one workspace / AI 写作助手",
+      "notes": "海外产品，国内落地需单独评估合规与网络"
+    }
+  ],
+  "templates": {
+    "research": {
+      "id": "research",
+      "title": "竞品 / 技术调研简报",
+      "outline": [
+        "背景与目标",
+        "关键发现（5-8条）",
+        "竞品或技术对比表",
+        "风险与待核实项",
+        "参考来源（标题+链接）"
+      ],
+      "output_file": "workspace/research_brief_*.md"
+    },
+    "docs": {
+      "id": "docs",
+      "title": "内部文档任务整理",
+      "outline": [
+        "任务概览",
+        "按优先级分组的待办",
+        "负责人分布",
+        "风险与截止提醒"
+      ],
+      "output_file": "workspace/task_digest_*.md"
+    }
+  }
+}

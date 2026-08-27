@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-bs-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/static/favicon.ico" type="image/x-icon" />
+    <title>易动调研助手</title>
+    <link href="static/bootstrap.min.css" rel="stylesheet" />
+    <link
+      href="https://gcore.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <script>
+      // 固定深色产品主题，避免 color-modes 切回浅色
+      try {
+        localStorage.setItem("theme", "dark");
+      } catch (e) {}
+      document.documentElement.setAttribute("data-bs-theme", "dark");
+    </script>
+    <link href="static/style.css" rel="stylesheet" />
+    <link href="static/brand.css" rel="stylesheet" />
+  </head>
+
+  <body class="yidong-body">
+    <header class="yidong-topbar">
+      <div class="yidong-brand">
+        <div class="yidong-mark" aria-hidden="true">易</div>
+        <div>
+          <div class="yidong-product">易动调研助手</div>
+          <div class="yidong-sub">北京易动纷享科技有限责任公司 · R&D</div>
+        </div>
+      </div>
+      <div class="yidong-status" id="modelStatus">模型连接中…</div>
+    </header>
+
+    <div class="yidong-layout">
+      <aside class="yidong-side">
+        <section class="yidong-panel">
+          <h2>产品</h2>
+          <p class="yidong-tagline">竞品 / 技术调研简报 Agent</p>
+          <ul class="yidong-bullets">
+            <li>检索 + 网页精读</li>
+            <li>MCP / 本地知识库</li>
+            <li>简报自动落盘</li>
+          </ul>
+        </section>
+
+        <section class="yidong-panel">
+          <h2>已连接能力</h2>
+          <ul class="yidong-caps" id="capabilityList">
+            <li class="is-muted">加载中…</li>
+          </ul>
+        </section>
+
+        <section class="yidong-panel">
+          <h2>快捷任务</h2>
+          <button type="button" class="yidong-demo" data-prompt-id="research">
+            <strong>竞品 / 技术调研简报</strong>
+            <span>检索公开信息并生成简报</span>
+          </button>
+          <button type="button" class="yidong-demo" data-prompt-id="docs">
+            <strong>内部文档任务整理</strong>
+            <span>归纳工作区备忘录待办</span>
+          </button>
+        </section>
+
+        <section class="yidong-panel">
+          <h2>能力边界</h2>
+          <ul class="yidong-bullets">
+            <li>公开网页检索，结论需复核</li>
+            <li>默认不启用浏览器自动化</li>
+            <li>交付物写入本地 workspace</li>
+          </ul>
+        </section>
+      </aside>
+
+      <main class="yidong-main main-content">
+        <div class="yidong-chat-scroll">
+          <div class="chat-container">
+            <div class="chat-messages" id="chatMessages">
+              <div class="yidong-hero" id="yidongHero">
+                <div class="yidong-hero-kicker">北京易动纷享科技有限责任公司 · R&D</div>
+                <h1>易动调研助手</h1>
+                <p>检索、精读、知识库与落盘协同的调研 Agent 工作台。</p>
+                <div class="yidong-hero-actions">
+                  <button type="button" class="yidong-hero-btn" data-prompt-id="research">
+                    开始调研简报
+                  </button>
+                  <button type="button" class="yidong-hero-btn yidong-hero-btn-ghost" data-prompt-id="docs">
+                    整理内部待办
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bottom-fixed-area yidong-bottom">
+          <div class="input-container">
+            <textarea
+              class="form-control"
+              id="messageInput"
+              placeholder="输入调研目标，例如：对比飞书与钉钉近期 AI 助手能力，输出简报…"
+            ></textarea>
+            <div class="long-thought-toggle">
+              <input type="checkbox" id="longThoughtCheckbox" checked />
+              <label for="longThoughtCheckbox"
+                ><span style="margin-left: 6px">思考轨迹</span></label
+              >
+              <button
+                class="btn btn-history"
+                id="btn-history"
+                data-bs-toggle="tooltip"
+                data-bs-placement="top"
+                data-bs-title="历史任务"
+                type="button"
+              >
+                <i class="bi bi-clock-history"></i>
+              </button>
+              <button
+                class="btn btn-chat"
+                id="btn-chat"
+                data-bs-toggle="tooltip"
+                data-bs-placement="top"
+                data-bs-title="新对话"
+                type="button"
+              >
+                <i class="bi bi-chat-dots"></i>
+              </button>
+              <button
+                class="btn btn-paperclip"
+                id="btn-paperclip"
+                data-bs-toggle="tooltip"
+                data-bs-placement="top"
+                data-bs-title="上传 .txt"
+                type="button"
+              >
+                <i class="bi bi-paperclip"></i>
+              </button>
+              <input type="file" class="d-none" id="fileInput" accept=".txt" />
+            </div>
+            <button
+              class="btn"
+              id="sendButton"
+              type="button"
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              data-bs-title="发送"
+            >
+              <span
+                id="send-spinner"
+                class="spinner-grow spinner-grow-sm text-primary"
+                role="status"
+                aria-hidden="true"
+              ></span>
+              <i class="bi bi-send"></i>
+            </button>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <div class="modal fade" id="historyModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">历史任务</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <ul class="list-group" id="historyList"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="position-fixed top-50 start-50 translate-middle"
+      style="z-index: 1100"
+    >
+      <div
+        id="errorToast"
+        class="toast"
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+      >
+        <div class="toast-header bg-danger text-white">
+          <strong class="me-auto">易动调研助手</strong>
+          <button
+            type="button"
+            class="btn-close btn-close-white"
+            data-bs-dismiss="toast"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="toast-body"></div>
+      </div>
+    </div>
+
+    <script src="static/marked.min.js"></script>
+    <script src="static/bootstrap.bundle.min.js"></script>
+    <script src="static/purify.min.js"></script>
+    <script src="static/trace_format.js"></script>
+    <script src="static/main.js"></script>
+    <script src="static/brand.js"></script>
+  </body>
+</html>

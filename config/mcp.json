@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "yidong_research": {
+      "type": "stdio",
+      "command": "${PYTHON}",
+      "args": ["mcp_servers/yidong_research_mcp.py"]
+    }
+  }
+}
